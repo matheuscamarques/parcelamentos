@@ -43,6 +43,7 @@ ATENÇÃO:
     A aplicação sera feita em versão PHP/7.4.1
     Banco de dados 10.4.11-MariaDB 
     Jquery 
-    Deploy 000webhost
+    https://engcomp2088932.000webhostapp.com/Parcelamentos/interface/
     Github
+    https://github.com/matheuscamarques/parcelamentos/
     
