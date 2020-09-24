@@ -47,3 +47,5 @@ ATENÇÃO:
     Github
     https://github.com/matheuscamarques/parcelamentos/
     
+    Existe um seeds de taxas em :
+    https://github.com/matheuscamarques/api/seeds/taxas.php
