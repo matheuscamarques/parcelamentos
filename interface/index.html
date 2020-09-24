@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcelamentos</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="formulario">
+                        <h5 class="card-title">Registro de Débito</h5>
+                        <div class="form-group">
+                            <label for="descri">Descrição do Pagamento</label>
+                            <input type="text" class="form-control" id="descri" aria-describedby="emailHelp"
+                                placeholder="IPVA">
+                            <small id="descriHelp" class="form-text text-muted">Específique o débito. Ex: IPVA,
+                                Multas.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="valor_debito" >Valor do Débito</label>
+                            <input type="number"  class="form-control" id="valor_debito" placeholder="0,00">
+                        </div>
+
+                        <div class="text-center">
+                            <button id="registro" onclick="event.preventDefault()"  class="btn btn-primary ">Registrar</button>
+                            <button id="limpar"  onclick="event.preventDefault()" class="btn btn-danger ">Limpar</button>
+                        </div>
+                    </form>
+                    
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6" id="listagemDebitos">
+            <div class="card">
+                <div class="card-body" style="overflow-y: scroll; height: 260px;">
+                    <h5 class="card-title">Lista de Débitos</h5>
+                    
+
+                    <table id="listagem_debitos"  class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">DESCRIÇÃO</th>
+                            <th scope="col">VALOR</th>
+                            <th scope="col">OPT</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          
+        
+                        </tbody>
+
+
+                      </table>
+
+                </div>
+
+                <div class="card-footer" >
+                    <h5 class="card-title">Total: <p id="valor_total"></p></h5>
+                    <button type="button"  id="btn-simular" class="btn btn-success"> Fazer Simulação </button>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <hr>
+
+
+
+    <div class="card text-center" id="listagemParcelamentos">
+        <div class="card-header">
+            <h5 class="card-title">Parcelamentos</h5>
+        </div>
+
+        <div class="row" id="formas_de_pagamento">
+
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success">Continuar a transação.</button>
+        </div>
+
+
+    </div>
+
+
+
+</body>
+
+</html>
+<script>
+    /*
+    *
+    *   Variaveis Globais
+    *
+    *
+    */
+    var listaDeDebitos = [] ;
+    var listaDeParcelamentos = [];
+    var valor_total = 0;
+
+</script>
+<script>
+    /*
+    *
+    *
+    * Inicializadores
+    * 
+    */
+    $("#listagemDebitos").hide();
+    $("#listagemParcelamentos").hide();
+    $("#formulario").submit( () => {
+        return false;
+    });
+
+
+</script>
+
+<script>
+    /*
+    *
+    *   Manipulador de Formulario
+    *
+    *
+    */
+
+    $( "#registro" ).on( "click", function() {
+        let c_descr = $("#descri").val() == "" ? false : $("#descri").val();
+        let c_valor = $("#valor_debito").val() =="" ? false : $("#valor_debito").val();
+        
+
+        if( c_descr == false || c_valor == false){
+            alert("Dados invalidos: Campos Vazios");
+            return false
+        }
+        
+        var debitos = {
+            descr : c_descr,
+            valor : c_valor
+        }
+
+        listaDeDebitos.push(debitos);
+        listarDebitos();
+    });
+
+
+    $( "#limpar" ).on( "click", function() {
+       
+    });
+
+
+    function listarDebitos(){
+        let string = '';
+        let valor = 0;
+        for(let i=0 ; i<listaDeDebitos.length; i++){
+            string = string + `
+                        <tr>
+                            <th scope="row">${i + 1}</th>
+                            <td>${listaDeDebitos[i].descr}</td>
+                            <td>${listaDeDebitos[i].valor}</td>
+                            <td><button type="button" onclick="removeLista(${i})" class="btn btn-danger">Remove</button></td>
+                          </tr>
+            `
+            valor = valor + parseFloat(listaDeDebitos[i].valor);
+        }
+
+        $("#listagem_debitos tbody").html(string);
+        
+        $("#valor_total").text(" R$ " + valor  );
+
+        $("#listagemDebitos").show();
+
+        valor_total = valor;
+    }
+
+    function removeLista(index){
+        listaDeDebitos.splice(index,1);
+        listarDebitos();
+    }
+
+</script>
+
+
+<script>
+    /*
+    *
+    *
+    *  Manipulação da Simulação
+    * 
+    * 
+    * 
+    */
+
+    $("#btn-simular").click(() => {
+         /*
+        *
+        *
+        *   Json de Parcelamento
+        * 
+        */
+
+      
+       $.ajax({
+            method: "GET",
+            url: "http://localhost/parcelamentos/api/parcelar/",
+            data: { listaDeDebitos,valor_total },
+            success: function(data) {
+                //console.log(data);
+                data = JSON.parse(data);
+                data.opcoes = JSON.parse(data.opcoes);
+                //console.log(data);
+                let query = ` `;
+
+                for(let i=0; i< data.opcoes.length; i++){
+                    query = query +  `
+                    <div class="col-sm-4">
+                        <div class="card parcelamento" data-id="${data.id}" data-tipo="${data.opcoes[i].parcela}">
+                            <div class="card-body ">
+                                <h5 class="card-title">${data.opcoes[i].parcela}X DE</h5>
+                                <p class="card-text">R$ ${data.opcoes[i].v_parcelas == "0,00" ? data.opcoes[i].total : data.opcoes[i].v_parcelas}</p>
+                                <p class="card-text">TOTAL: R$ ${data.opcoes[i].total}</p>
+                            </div>
+                        </div>
+                    </div> 
+                    `;
+
+                    $("#formas_de_pagamento").html(query);
+
+                    
+                    // Tratamento do Click dos Parcelamentos
+
+                    $( ".parcelamento" ).on( "click", function() {
+                        //console.log( $( this ).text() );
+                        $(".parcelamento" ).removeClass("bg-success");
+                        $( this ).addClass("bg-success");
+                        //console.log( $( this ).attr("data-id"),  $( this ).attr("data-tipo") );
+                        c_id = $( this ).attr("data-id");
+                        c_tipo = $( this ).attr("data-tipo");
+
+                        $.ajax({
+                            method: "POST",
+                            url: "http://localhost/parcelamentos/api/pagar/",
+                            data: { id: c_id, tipo: c_tipo },
+                            success : function (data){
+                                
+
+                                data= JSON.parse(data);
+                                console.log(data);
+
+                                data.info == true ? console.log(`Pagamento : ${data.last_id} , success : true `) : alert("Não autorizado pela operadora do cartão");
+                            }
+
+                        });
+                        
+
+                    });
+                }
+
+                
+
+
+            }
+        })
+
+        $("#listagemParcelamentos").show();
+
+
+    });
+       
+    
+
+    
+    
+
+</script>
+
