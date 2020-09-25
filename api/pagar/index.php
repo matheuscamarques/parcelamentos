@@ -9,8 +9,8 @@ function rand80(){
 
 $conn = Connection::start(); /* FIX ME - Tratamento caso falhe a conexão */
 
-$id_simulacao = $_POST['id'];
-$tipo_parcela = $_POST['tipo'];
+$id_simulacao = $_POST['id']; /* FIX ME - Tratamento caso venha vazio */
+$tipo_parcela = $_POST['tipo']; /* FIX ME - Tratamento caso venha vazio  */
 $success = rand80();
 
     $query = "INSERT INTO pagamentos (simulacoes_id,sucesso,num_parcelas,data_time) VALUES('$id_simulacao','$success','$tipo_parcela','NOW()')";
