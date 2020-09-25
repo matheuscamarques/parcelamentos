@@ -5,7 +5,9 @@ require_once "../model/Connection.php";
 function rand80(){
    return ( rand(0,100) > 81 ? false : true );
 }
-$conn = Connection::start();
+
+
+$conn = Connection::start(); /* FIX ME - Tratamento caso falhe a conexão */
 
 $id_simulacao = $_POST['id'];
 $tipo_parcela = $_POST['tipo'];
