@@ -11,21 +11,16 @@ $id_simulacao = $_POST['id'];
 $tipo_parcela = $_POST['tipo'];
 $success = rand80();
 
-if($success){
-    $conn = Connection::start();
     $query = "INSERT INTO pagamentos (simulacoes_id,sucesso,num_parcelas,data_time) VALUES('$id_simulacao','$success','$tipo_parcela','NOW()')";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $id = $conn->lastInsertId();
+
+if($success){
     $data = ["info"=>true, "last_id" => $id];
     die(json_encode($data)) ;
 
 }else{
-    $conn = Connection::start();
-    $query = "INSERT INTO pagamentos (simulacoes_id,sucesso,num_parcelas,data_time) VALUES('$id_simulacao','$success','$tipo_parcela','NOW()')";
-    $stmt = $conn->prepare($query);
-    $stmt->execute();
-    $id = $conn->lastInsertId();
     $data = ["info"=>false, "last_id" => $id];
     die(json_encode($data)) ;
 }
