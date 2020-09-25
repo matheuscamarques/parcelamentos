@@ -9,9 +9,9 @@ $valor = (float)(((object)$_GET)->valor_total);
 //echo var_dump((object)$_GET);
 
 /*
-*
-*
-*
+*       opções - JSON contendo opções de pagamento ($valor , $quantidade_de_parcelas)
+*       simulação - JSON contendo a Simulação , sendo ela uma Lista de Debitos , 
+*       valor_total - Soma do valor da Lista de Debitos.
 */
 
 
