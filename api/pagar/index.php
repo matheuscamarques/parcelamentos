@@ -21,7 +21,12 @@ if($success){
     die(json_encode($data)) ;
 
 }else{
-    $data = ["info"=>false];
+    $conn = Connection::start();
+    $query = "INSERT INTO pagamentos (simulacoes_id,sucesso,num_parcelas,data_time) VALUES('$id_simulacao','$success','$tipo_parcela','NOW()')";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $id = $conn->lastInsertId();
+    $data = ["info"=>false, "last_id" => $id];
     die(json_encode($data)) ;
 }
 
