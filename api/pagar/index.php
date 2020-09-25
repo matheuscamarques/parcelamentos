@@ -13,7 +13,7 @@ $id_simulacao = $_POST['id']; /* FIX ME - Tratamento caso venha vazio */
 $tipo_parcela = $_POST['tipo']; /* FIX ME - Tratamento caso venha vazio  */
 $success = rand80();
 
-    $query = "INSERT INTO pagamentos (simulacoes_id,sucesso,num_parcelas,data_time) VALUES('$id_simulacao','$success','$tipo_parcela','NOW()')";
+    $query = "INSERT INTO pagamentos (simulacoes_id,sucesso,num_parcelas,data_time) VALUES('$id_simulacao','$success','$tipo_parcela',NOW())";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $id = $conn->lastInsertId();
